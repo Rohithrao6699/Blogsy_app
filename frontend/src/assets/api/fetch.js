@@ -1,103 +1,73 @@
 import axios from "axios";
-import { useFetch } from "../../hooks/useFetch";
 
 const Base_Url = "http://localhost:3000";
 
 //useFetch(method, url, data, headers, params)
 
 export async function fetchAllBlogs(page, limit) {
-  const params = { page, limit };
-  const { data, loader, error } = useFetch(
-    "GET",
-    `${Base_Url}/user/allblogs`,
-    {},
-    {},
-    params
+  const res = await axios.get(
+    `${Base_Url}/user/allblogs?page=${page}&limit=${limit}`
   );
+  const data = res.data;
   return data;
+  //totlPages, blogs, currentPage
 }
 
 export async function signup(signUpdata) {
-  const { data, loader, error } = useFetch(
-    "POST"`${Base_Url}/user/signup`,
-    signUpdata,
-    {},
-    {}
-  );
+  const res = await axios.post(`${Base_Url}/user/signup`, signUpdata);
+  const data = res.data;
   return data;
 }
 
 export async function signin(signindata) {
-  const { data, loader, error } = useFetch(
-    "POST",
-    `${Base_Url}/user/signin`,
-    signindata,
-    {},
-    {}
-  );
+  const res = await axios.post(`${Base_Url}/user/signin`, signindata);
+  const data = res.data;
   return data;
 }
 
 export async function myblogs() {
   const token = localStorage.getItem("token");
-  const { data, loader, error } = useFetch(
-    "GET",
-    `${Base_Url}/user/myblogs`,
-    {},
-    token,
-    {}
-  );
+  const res = await axios.get(`${Base_Url}/user/myblogs`, {
+    headers: { token: token },
+  });
+  const data = res.data;
   return data;
+  //blogs, msg
 }
 
 export async function createblog(blogdata) {
   const token = localStorage.getItem("token");
-  const { data, loader, error } = useFetch(
-    "POST",
-    `${Base_Url}/user/createblog`,
-    blogdata,
-    token,
-    {}
-  );
+  const res = await axios.post(`${Base_Url}/user/createblog`, blogdata, {
+    headers: { token: token },
+  });
+  const data = res.data;
   return data;
+  //blogs, success
 }
 
 export async function updateblog(updatedData) {
   const token = localStorage.getItem("token");
-
-  const { data, loader, error } = useFetch(
-    "PUT",
-    `${Base_Url}/user/updateblog`,
-    updatedData,
-    token,
-    {}
-  );
+  const res = await axios.put(`${Base_Url}/user/updateblog`, updatedData, {
+    headers: { token },
+  });
+  const data = res.data;
   return data;
 }
 
 export async function deleteblog(blogId) {
   const token = localStorage.getItem("token");
-
-  const { data, loader, error } = useFetch(
-    "DELETE",
-    `${Base_Url}/user/deleteblog`,
-    blogId,
-    token,
-    {}
-  );
+  const res = await axios.delete(`${Base_Url}/user/deleteblog`, {
+    headers: { token },
+    data: { blogId },
+  });
+  const data = res.data;
   return data;
 }
 
 export async function authorblogs(userId) {
   console.log(userId);
-  const params = { userId };
-
-  const { data, loader, error } = useFetch(
-    "GET",
-    `${Base_Url}/user/authorblogs`,
-    {},
-    {},
-    params
-  );
+  const res = await axios.get(`${Base_Url}/user/authorblogs?userId=${userId}`);
+  const data = res.data;
   return data;
+  //blogs, success
 }
