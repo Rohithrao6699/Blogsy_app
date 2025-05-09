@@ -3,7 +3,7 @@ import { Token } from "monaco-editor";
 import { useEffect, useState } from "react";
 
 export function useFetch(method, url, data = {}, headers = {}, params = {}) {
-  const [data, setData] = useState({});
+  const [dataa, setDataa] = useState({});
   const [loader, setLoader] = useState(false);
   const [error, setError] = useState({});
 
@@ -17,7 +17,7 @@ export function useFetch(method, url, data = {}, headers = {}, params = {}) {
         data: data,
         headers: headers,
       });
-      setData(res.data);
+      setDataa(res.data);
       setLoader(false);
     } catch (error) {
       setError(error);
@@ -28,5 +28,5 @@ export function useFetch(method, url, data = {}, headers = {}, params = {}) {
     fetchData();
   }, [url]);
 
-  return { data, loader, error };
+  return { dataa, loader, error };
 }

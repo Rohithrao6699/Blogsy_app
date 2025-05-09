@@ -91,7 +91,7 @@ userRouter.get("/allblogs", PaginationMW(BlogModel), async function (req, res) {
   // res.json({
   //   blogs,
   // });
-  res.json(res.paginatedResults);
+  res.json(res.paginatedresults);
 });
 
 //we cannot use the PaginatedMW here as it is doing more filtered query, if
