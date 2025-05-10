@@ -4,6 +4,7 @@ import { usePaginationStore } from "../storeZustand/PaginationStore";
 import { useEffect } from "react";
 import { useBlogStore } from "../storeZustand/AllBlogs";
 import { fetchAllBlogs } from "../api/fetch";
+import { BlogBlock } from "../ui/blogBlock";
 
 export function Home() {
   const navigate = useNavigate();
@@ -23,30 +24,26 @@ export function Home() {
     getBlogs(currentPage);
   }, [currentPage]);
 
-  function redirect() {
-    navigate("/signup");
-  }
-
   function handleGetAuthor(userId) {
     navigate(`/author-blogs?userId=${userId}`);
   }
-
+  function redirect() {
+    navigate("/signup");
+  }
   return (
-    <>
-      <button onClick={redirect}>Login</button>
-      Home
+    <div className="flex-1 min-h-[70vh]">
+      <p>Home</p>
       {blogs.map((blog) => (
-        <ul key={blog._id}>
-          <li>{blog.title}</li>
-          <li>{blog.content}</li>
-          <p>
-            <b onClick={() => handleGetAuthor(blog.userId._id)}>author: </b>
-            {blog.userId.name}
-          </p>
-        </ul>
+        <BlogBlock
+          id={blog._id}
+          title={blog.title}
+          content={blog.content}
+          author={blog.userId.name}
+          handleGetAuthor={handleGetAuthor}
+        />
       ))}
       <Paginate />
       <button onClick={redirect}>create Blogs</button>
-    </>
+    </div>
   );
 }

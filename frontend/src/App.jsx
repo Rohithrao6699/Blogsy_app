@@ -1,11 +1,11 @@
 import "./App.css";
-import { useEffect, useState } from "react";
 import { Signup } from "./components/signup";
 import { Blogs } from "./components/blogs";
 import { BlogCreation } from "./components/createBlog";
 import { MyBlogs } from "./components/myblogs";
 import { Login } from "./components/login";
 import { AuthorBlogs } from "./components/authorBlogs";
+import { Home } from "./components/home";
 import {
   BrowserRouter,
   Routes,
@@ -13,42 +13,39 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
-import { fetchAllBlogs } from "./api/fetch";
-import { Home } from "./components/home";
-import { useBlogStore } from "./storeZustand/AllBlogs";
+import { NavBar } from "./components/navBar";
+import { Footer } from "./components/footer";
 
 function App() {
-  const [blogs, setBlogs] = useState([]);
-  const limit = 5;
-
-  async function getBlogs(page) {
-    const data = await fetchAllBlogs(page, limit);
-    console.log(data);
-    console.log(data.content.blogs);
-    setBlogs(data.content.blogs);
-    setTotalPages(data.content.totalPages);
-  }
-  // useEffect(() => {
-  //   getBlogs(currentPage);
-  // }, [currentPage]);
-
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/error" element={<Error />} />
-          <Route path="/" element={<Home />} />
-          <Route path="author-blogs" element={<AuthorBlogs />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/blogs" element={<Blogs />} />
-            <Route path="/createblog" element={<BlogCreation />} />
-            <Route path="/myblogs" element={<MyBlogs />} />
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="author-blogs" element={<AuthorBlogs />} />
+            <Route path="signup" element={<Signup />} />
+            <Route path="login" element={<Login />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="blogs" element={<Blogs />} />
+              <Route path="createblog" element={<BlogCreation />} />
+              <Route path="myblogs" element={<MyBlogs />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
     </>
+  );
+}
+
+function Layout() {
+  return (
+    <div className="min-h-screen w-screen flex flex-col">
+      <NavBar />
+      <Outlet />
+      <Footer />
+    </div>
   );
 }
 
