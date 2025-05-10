@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { myblogs, updateblog, deleteblog } from "../api/fetch";
 import { useState, useEffect } from "react";
-import { useDebounce } from "../../hooks/useDebounce";
+import { useDebounce } from "../hooks/useDebounce";
+import { useUserBlogs } from "../storeZustand/UserBlogs";
 
 export function MyBlogs() {
   const navigate = useNavigate();
-  const [myBlogs, setMyBlogs] = useState([]);
-  const [editState, setEditState] = useState(null);
+  const { myBlogs, editState, setMyBlogs, setEditState } = useUserBlogs();
   const [editedData, setEditedData] = useState({
     title: "",
     content: "",

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { createblog } from "../api/fetch";
 import { useState } from "react";
-import { useDebounce } from "../../hooks/useDebounce";
+import { useDebounce } from "../hooks/useDebounce";
 
 export function BlogCreation() {
   const navigate = useNavigate();

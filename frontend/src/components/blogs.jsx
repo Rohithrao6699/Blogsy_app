@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-export function Blogs({ blogs, setBlogs, getBlogs }) {
+export function Blogs() {
   const navigate = useNavigate();
+  const { blogs, setBlogs } = useBlogStore();
+  const { currentPage, limit, setTotalPages } = usePaginationStore();
 
   function createBlog() {
     navigate("/createblog");
@@ -15,6 +17,20 @@ export function Blogs({ blogs, setBlogs, getBlogs }) {
   function handleLogOut() {
     localStorage.removeItem("token");
   }
+
+  async function getBlogs(page) {
+    const data = await fetchAllBlogs(page, limit);
+    console.log(data);
+    console.log(data.content.blogs);
+    setBlogs(data.content.blogs);
+    setTotalPages(data.content.totalPages);
+  }
+
+  useEffect(() => {
+    console.log(currentPage);
+    getBlogs(currentPage);
+  }, [currentPage]);
+
   return (
     <>
       <nav>
@@ -37,6 +53,7 @@ export function Blogs({ blogs, setBlogs, getBlogs }) {
         ) : (
           <p>No blogs available</p>
         )}
+        <Paginate />
       </div>
       <footer>
         <button onClick={createBlog}>Create Blog</button>

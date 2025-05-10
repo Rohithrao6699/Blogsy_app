@@ -36,24 +36,24 @@ userRouter.post("/signup", async function (req, res) {
       });
       if (user) {
         res.status(200).json({
-          msg: "user created sucessfully",
+          message: "user created sucessfully",
           success: true,
         });
       } else {
         res.status(400).json({
-          msg: "error while creating user, please try again!",
+          message: "error while creating user, please try again!",
           success: false,
         });
       }
     } else {
       res.json({
-        msg: `error as input did not match validation ${validUser.error.issues}`,
+        message: `error as input did not match validation ${validUser.error.issues}`,
         success: false,
       });
     }
   } catch (error) {
     res.status(400).json({
-      msg: `The error os from /signup ${error}`,
+      message: `The error os from /signup ${error}`,
       success: false,
     });
   }
@@ -66,7 +66,7 @@ userRouter.post("/signin", async function (req, res) {
     email,
   });
   if (!user) {
-    return res.status(400).json({ msg: "User not found!" });
+    return res.status(400).json({ message: "User not found!" });
   }
   const passwordMatch = await bcrypt.compare(password, user.password);
   console.log(passwordMatch);
@@ -80,7 +80,7 @@ userRouter.post("/signin", async function (req, res) {
     });
   } else {
     res.status(400).json({
-      msg: "no user found",
+      message: "no user found",
       success: false,
     });
   }
@@ -105,12 +105,12 @@ userRouter.get("/authorblogs", async function (req, res) {
   if (user) {
     blogs = user.blogs;
     res.status(200).json({
-      blogs,
+      content: blogs,
       success: true,
     });
   } else {
     res.status(200).json({
-      msg: "user not found",
+      message: "user not found",
       success: false,
     });
   }
@@ -127,12 +127,14 @@ userRouter.get("/myblogs", auth, async function (req, res) {
 
   if (blogs) {
     res.json({
-      blogs,
-      msg: "got all blogs",
+      content: blogs,
+      success: true,
+      message: "got all blogs",
     });
   } else {
     res.json({
-      msg: "could not find blogs!",
+      success: false,
+      message: "could not find blogs!",
     });
   }
 });
@@ -155,7 +157,7 @@ userRouter.post("/createblog", auth, async function (req, res) {
     }
   );
   res.json({
-    blog,
+    content: blog,
     success: true,
   });
 });
@@ -171,12 +173,12 @@ userRouter.put("/updateblog", auth, async function (req, res) {
       { new: true }
     );
     res.json({
-      toUpdateBlog,
+      content: toUpdateBlog,
       success: true,
     });
   } catch (error) {
     res.status(400).json({
-      msg: "Something went wrong from server",
+      message: "Something went wrong from server",
       success: false,
     });
   }
@@ -191,8 +193,8 @@ userRouter.delete("/deleteblog", auth, async function (req, res) {
     _id: blogId,
   });
   res.json({
-    deletedblog,
-    msg: "sucesfully deleted!",
+    constent: deletedblog,
+    message: "sucesfully deleted!",
     success: true,
   });
 });

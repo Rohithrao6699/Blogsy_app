@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { signup } from "../api/fetch";
 import { useNavigate } from "react-router-dom";
-import { useDebounce } from "../../hooks/useDebounce";
+import { useDebounce } from "../hooks/useDebounce";
 
 export function Signup() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export function Signup() {
     if (data.success) {
       navigate("/login");
     } else {
-      console.log(data.msg);
+      console.log(data.message);
     }
   }
 

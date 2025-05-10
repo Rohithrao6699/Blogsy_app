@@ -14,9 +14,9 @@ function PaginationMW(model) {
       const totalPages = Math.ceil(totalBlogs / limit);
 
       res.paginatedresults = {
-        totalPages,
-        blogs,
-        currentPage: page,
+        success: true,
+        message: "successfully fetched documents",
+        content: { totalPages, blogs, currentPage: page },
       };
       next();
     } catch (error) {

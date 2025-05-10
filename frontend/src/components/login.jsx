@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { signin } from "../api/fetch";
 import { useState } from "react";
-import { useDebounce } from "../../hooks/useDebounce";
+import { useDebounce } from "../hooks/useDebounce";
 
 export function Login() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export function Login() {
       localStorage.setItem("token", data.token);
       navigate("/blogs");
     } else {
-      console.log(data.msg);
+      console.log(data.message);
     }
   }
   return (
